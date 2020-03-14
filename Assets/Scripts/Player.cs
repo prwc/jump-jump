@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
     private void UpdateScore(int score)
     {
         this.score = score;
-        scoreText.text = $"x {score.ToString("N0")}";
+        scoreText.text = $"{score.ToString("N0")}";
     }
 
     private void Update()
@@ -108,10 +108,10 @@ public class Player : MonoBehaviour
 
         isGrounded = true;
 
-        if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 0.75f)
+        if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 0.8f)
         {
             Vector3 cameraPosition = Camera.main.transform.position;
-            cameraPosition.y = transform.position.y + 3f;
+            cameraPosition.y = transform.position.y + 4f;
             StageTransition(cameraPosition, 2f);
         }
 
@@ -142,14 +142,24 @@ public class Player : MonoBehaviour
 
         stageTransitionTextGroup.gameObject.SetActive(true);
 
+        var platforms = GameObject.FindObjectsOfType<Platform>();
+        foreach (var platform in platforms)
+        {
+            platform.enabled = false;
+        }
+
         do
         {
-            ratio = (Time.time - startTime) / time;
+            ratio = Mathf.Clamp01((Time.time - startTime) / time);
             Camera.main.transform.position = Vector3.Lerp(startPosition, cameraTargetPosition, ratio);
             yield return null;
         } while (ratio < 1f);
 
         stageTransitionTextGroup.gameObject.SetActive(false);
+        foreach (var platform in platforms)
+        {
+            platform.enabled = true;
+        }
 
         stageTransitionRoutine = default;
 
