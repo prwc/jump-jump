@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    public int Score { get; private set; } = 0;
+
     [SerializeField]
     private List<Transform> circularWaypoint = default;
 
@@ -12,9 +14,14 @@ public class Platform : MonoBehaviour
 
     private int targetIndex = 0;
 
+    public void SetScore(int score)
+    {
+        Score = score;
+    }
+
     private void Start()
     {
-        transform.localPosition = Vector2.right * Random.Range(-2f, 2f);
+        targetIndex = Random.Range(0, circularWaypoint.Count);
     }
 
     private void Update()

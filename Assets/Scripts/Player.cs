@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -12,22 +14,39 @@ public class Player : MonoBehaviour
     private Collider2D playerCollider = default;
 
     [SerializeField]
+    private TextMeshProUGUI scoreText = default;
+
+    [SerializeField]
+    private GameObject stageTransitionTextGroup = default;
+
+    [SerializeField]
     private float jumpSpeed = 300f;
 
     private bool isGrounded = false;
 
     private int platformLayer;
     private int playerLayer;
+    private int score = 0;
+
+    private Coroutine stageTransitionRoutine = default;
 
     // Start is called before the first frame update
     void Start()
     {
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
+
+        stageTransitionTextGroup.gameObject.SetActive(false);
+        UpdateScore(0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateScore(int score)
+    {
+        this.score = score;
+        scoreText.text = $"x {score.ToString("N0")}";
+    }
+
+    private void Update()
     {
         if (isGrounded && isTriggerJump())
         {
@@ -46,6 +65,11 @@ public class Player : MonoBehaviour
 
     private bool isTriggerJump()
     {
+        if (stageTransitionRoutine != default)
+        {
+            return false;
+        }
+
         if (Input.GetButtonDown("Jump"))
         {
             return true;
@@ -81,18 +105,54 @@ public class Player : MonoBehaviour
         {
             transform.SetParent(other.transform);
         }
+
         isGrounded = true;
 
         if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 0.75f)
         {
             Vector3 cameraPosition = Camera.main.transform.position;
             cameraPosition.y = transform.position.y + 3f;
-            Camera.main.transform.position = cameraPosition;
+            StageTransition(cameraPosition, 2f);
+        }
+
+        if (other.gameObject.GetComponent<Platform>() is Platform platform)
+        {
+            if (platform.Score > score)
+            {
+                UpdateScore(platform.Score);
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
         isGrounded = false;
+    }
+
+    private void StageTransition(Vector3 cameraTargetPosition, float time)
+    {
+        stageTransitionRoutine = StartCoroutine(StageTransitionRoutine(cameraTargetPosition, time));
+    }
+
+    private IEnumerator StageTransitionRoutine(Vector3 cameraTargetPosition, float time)
+    {
+        float startTime = Time.time;
+        Vector3 startPosition = Camera.main.transform.position;
+        float ratio = 0f;
+
+        stageTransitionTextGroup.gameObject.SetActive(true);
+
+        do
+        {
+            ratio = (Time.time - startTime) / time;
+            Camera.main.transform.position = Vector3.Lerp(startPosition, cameraTargetPosition, ratio);
+            yield return null;
+        } while (ratio < 1f);
+
+        stageTransitionTextGroup.gameObject.SetActive(false);
+
+        stageTransitionRoutine = default;
+
+        yield return null;
     }
 }
