@@ -16,24 +16,30 @@ public class PlatformGenerator : MonoBehaviour
             GameObject go = GameObject.Instantiate(platformGroupPrefab, Vector3.up * (i + 1) * offsetHeight, Quaternion.identity, transform);
             Platform platform = go.GetComponentInChildren<Platform>();
             platform.SetScore(i + 1);
-            int boxSize = maxBoxSize;
-
-            if (Random.Range(0, 100) < i)
-            {
-                if (Random.Range(0, 100) < i)
-                {
-                    boxSize = 1;
-                }
-                else
-                {
-                    boxSize = 2;
-                }
-            }
-
-            platform.SetMoveSpeed(1f + Random.Range(0, (i / 20f)));
-
-            platform.SetSize(boxSize);
+            platform.SetMoveSpeed(CalculateMoveSpeed(i));
+            platform.SetSize(CalculateSize(i));
             platform.transform.localPosition = Vector2.right * Random.Range(-2f, 2f);
         }
+    }
+
+    private float CalculateMoveSpeed(int index)
+    {
+        return (1f + Random.Range(0, (index / 20f)));
+    }
+
+    private int CalculateSize(int index)
+    {
+        if (Random.Range(0, 100) < index)
+        {
+            if (Random.Range(0, 100) < index)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        return 3;
     }
 }
