@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class DeadArea : MonoBehaviour
 {
@@ -17,7 +14,8 @@ public class DeadArea : MonoBehaviour
     {
         if (other.gameObject.layer == playerLayer)
         {
-            SceneManager.LoadScene(0);
+            Player player = other.gameObject.GetComponent<Player>();
+            player.RestartGame();
         }
     }
 }

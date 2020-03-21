@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI scoreText = default;
 
     [SerializeField]
+    private TextMeshProUGUI highScoreText = default;
+
+    [SerializeField]
     private float jumpSpeed = 300f;
 
     private bool isGrounded = false;
@@ -24,8 +28,11 @@ public class Player : MonoBehaviour
     private int platformLayer;
     private int playerLayer;
     private int score = 0;
+    private int highScore = 0;
 
     private Coroutine stageTransitionRoutine = default;
+
+    private const string highScorePlayerPref = "highscore_alpha";
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +40,19 @@ public class Player : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
 
+        highScore = PlayerPrefs.GetInt(highScorePlayerPref, 0);
+        highScoreText.text = highScore.ToString("N0");
+
         UpdateScore(0);
+    }
+
+    public void RestartGame()
+    {
+        if (score > highScore)
+        {
+            PlayerPrefs.SetInt(highScorePlayerPref, score);
+        }
+        SceneManager.LoadScene(0);
     }
 
     private void UpdateScore(int score)
