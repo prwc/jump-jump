@@ -10,13 +10,29 @@ public class Platform : MonoBehaviour
     private List<Transform> circularWaypoint = default;
 
     [SerializeField]
+    private SpriteRenderer spriteRenderer = default;
+
+    [SerializeField]
+    private BoxCollider2D boxCollider = default;
     private float moveSpeed = 1f;
 
     private int targetIndex = 0;
 
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        this.moveSpeed = moveSpeed;
+    }
+
     public void SetScore(int score)
     {
         Score = score;
+    }
+
+    public void SetSize(int size)
+    {
+        Vector2 newSize = new Vector2(size, spriteRenderer.size.y);
+        spriteRenderer.size = newSize;
+        boxCollider.size = newSize;
     }
 
     private void Start()
