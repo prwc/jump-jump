@@ -17,9 +17,6 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI scoreText = default;
 
     [SerializeField]
-    private GameObject stageTransitionTextGroup = default;
-
-    [SerializeField]
     private float jumpSpeed = 300f;
 
     private bool isGrounded = false;
@@ -36,7 +33,6 @@ public class Player : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
 
-        stageTransitionTextGroup.gameObject.SetActive(false);
         UpdateScore(0);
     }
 
@@ -140,8 +136,6 @@ public class Player : MonoBehaviour
         Vector3 startPosition = Camera.main.transform.position;
         float ratio = 0f;
 
-        stageTransitionTextGroup.gameObject.SetActive(true);
-
         var platforms = GameObject.FindObjectsOfType<Platform>();
         foreach (var platform in platforms)
         {
@@ -155,7 +149,6 @@ public class Player : MonoBehaviour
             yield return null;
         } while (ratio < 1f);
 
-        stageTransitionTextGroup.gameObject.SetActive(false);
         foreach (var platform in platforms)
         {
             platform.enabled = true;
