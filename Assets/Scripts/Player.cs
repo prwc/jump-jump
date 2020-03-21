@@ -21,6 +21,12 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI highScoreText = default;
 
     [SerializeField]
+    private AudioSource jumpSound = default;
+
+    [SerializeField]
+    private AudioSource stageTransitionSound = default;
+
+    [SerializeField]
     private float jumpSpeed = 300f;
 
     private bool isGrounded = false;
@@ -68,6 +74,7 @@ public class Player : MonoBehaviour
             transform.SetParent(null);
             Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, true);
             playerRigidbody.AddForce(Vector2.up * jumpSpeed);
+            jumpSound.Play();
         }
 
         if (!isGrounded && playerRigidbody.velocity.y <= 0f)
@@ -160,6 +167,8 @@ public class Player : MonoBehaviour
         {
             platform.enabled = false;
         }
+
+        stageTransitionSound.Play();
 
         do
         {
