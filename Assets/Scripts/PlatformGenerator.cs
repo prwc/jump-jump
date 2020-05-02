@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 
 public class PlatformGenerator : MonoBehaviour
@@ -59,8 +61,12 @@ public class PlatformGenerator : MonoBehaviour
     private const int maxBoxSize = 3;
     private Vector3 startCameraPositionCache = default;
 
+    public static string GetAdvertisementID() => "3584481";
+
     private void Start()
     {
+        Advertisement.Initialize(GetAdvertisementID());
+
         startCameraPositionCache = Camera.main.transform.position;
 
         titleScreenGroup.gameObject.SetActive(true);
@@ -92,10 +98,14 @@ public class PlatformGenerator : MonoBehaviour
         titleScreenGroup.gameObject.SetActive(false);
         gameScreenGroup.gameObject.SetActive(false);
         retryScreenGroup.gameObject.SetActive(true);
+
+        StartCoroutine(ShowBannerWhenReady("retry_banner"));
     }
 
     public void StartGame()
     {
+        Advertisement.Banner.Hide();
+
         Camera.main.transform.position = startCameraPositionCache;
 
         titleScreenGroup.gameObject.SetActive(false);
@@ -153,6 +163,15 @@ public class PlatformGenerator : MonoBehaviour
                 platforms.Add(platform);
             }
         }
+    }
+
+    private IEnumerator ShowBannerWhenReady(string placementID)
+    {
+        while (!Advertisement.IsReady(placementID))
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
+        Advertisement.Banner.Show(placementID);
     }
 
     private float CalculateMoveSpeed(int index)
