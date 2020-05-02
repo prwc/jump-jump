@@ -14,9 +14,9 @@ public class Timer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void UpdateTime(float deltatime)
     {
-        timer += Time.deltaTime;
+        timer += deltatime;
         System.TimeSpan t = System.TimeSpan.FromSeconds(timer);
         timerText.text = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
     }

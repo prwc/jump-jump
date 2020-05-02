@@ -27,6 +27,9 @@ public class Player : MonoBehaviour
     private AudioSource stageTransitionSound = default;
 
     [SerializeField]
+    private Timer timer = default;
+
+    [SerializeField]
     private float jumpSpeed = 300f;
 
     private bool isGrounded = false;
@@ -80,6 +83,11 @@ public class Player : MonoBehaviour
         if (!isGrounded && playerRigidbody.velocity.y <= 0f)
         {
             Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, false);
+        }
+
+        if (stageTransitionRoutine == default)
+        {
+            timer.UpdateTime(Time.deltaTime);
         }
 
         UpdateState();

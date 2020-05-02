@@ -1583,6 +1583,11 @@ PrefabInstance:
       propertyPath: highScoreText
       value: 
       objectReference: {fileID: 300721217}
+    - target: {fileID: 4159131491925750542, guid: dbc82e4471bdae248b2465bc00d1cc21,
+        type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 1889442660}
     - target: {fileID: 4222394957801056881, guid: dbc82e4471bdae248b2465bc00d1cc21,
         type: 3}
       propertyPath: m_LocalPosition.x
