@@ -14,6 +14,9 @@ public class PlatformGenerator : MonoBehaviour
     private Sprite[] tileSprites = default;
 
     [SerializeField]
+    private Sprite[] treeSprites = default;
+
+    [SerializeField]
     private Sprite[] backgroundSprites = default;
 
     [SerializeField]
@@ -30,6 +33,9 @@ public class PlatformGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject retryScreenGroup = default;
+
+    [SerializeField]
+    private SpriteRenderer[] trees = default;
 
     [SerializeField]
     private Player player = default;
@@ -104,7 +110,14 @@ public class PlatformGenerator : MonoBehaviour
 
         int highScore = Player.GetHighScore();
         Sprite backgroundSprite = backgroundSprites[UnityEngine.Random.Range(0, backgroundSprites.Count())];
-        Sprite tileSprite = tileSprites[UnityEngine.Random.Range(0, tileSprites.Count())];
+        int spriteRandomIndex = UnityEngine.Random.Range(0, tileSprites.Count());
+        Sprite tileSprite = tileSprites[spriteRandomIndex];
+        Sprite treeSprite = treeSprites[spriteRandomIndex];
+
+        foreach (var tree in trees)
+        {
+            tree.sprite = treeSprite;
+        }
 
         InitGame();
 
