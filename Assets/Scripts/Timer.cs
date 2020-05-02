@@ -10,6 +10,11 @@ public class Timer : MonoBehaviour
 
     private void Start()
     {
+        ResetTime();
+    }
+
+    public void ResetTime()
+    {
         timer = 0f;
     }
 

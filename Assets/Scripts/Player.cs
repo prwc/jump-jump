@@ -54,6 +54,7 @@ public class Player : MonoBehaviour
     public void StartGame()
     {
         UpdateScore(0);
+        timer.ResetTime();
     }
 
     private void UpdateScore(int score)
