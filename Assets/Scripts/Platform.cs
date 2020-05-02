@@ -14,6 +14,10 @@ public class Platform : MonoBehaviour
 
     [SerializeField]
     private BoxCollider2D boxCollider = default;
+
+    [SerializeField]
+    private GameObject highScoreGroup = default;
+
     private float moveSpeed = 1f;
 
     private int targetIndex = 0;
@@ -28,11 +32,21 @@ public class Platform : MonoBehaviour
         Score = score;
     }
 
+    public void SetHighScoreGroupVisible(bool isVisible)
+    {
+        highScoreGroup.gameObject.SetActive(isVisible);
+    }
+
     public void SetSize(int size)
     {
         Vector2 newSize = new Vector2(size, spriteRenderer.size.y);
         spriteRenderer.size = newSize;
         boxCollider.size = newSize;
+    }
+
+    public void SetTileSprite(Sprite tileSprite)
+    {
+        spriteRenderer.sprite = tileSprite;
     }
 
     private void Start()

@@ -52,10 +52,11 @@ MonoBehaviour:
   playerRigidbody: {fileID: 37802396}
   playerCollider: {fileID: 8841146989627801516}
   scoreText: {fileID: 0}
-  highScoreText: {fileID: 0}
   jumpSound: {fileID: 8833713433931925775}
   stageTransitionSound: {fileID: 323873532}
+  timer: {fileID: 0}
   jumpSpeed: 350
+  waterAnimator: {fileID: 0}
 --- !u!50 &37802396
 Rigidbody2D:
   serializedVersion: 4

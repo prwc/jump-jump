@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public const string HighScorePlayerPref = "highscore_alpha";
+
     [SerializeField]
     private SpriteRenderer spriteRenderer = default;
 
@@ -16,9 +18,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI scoreText = default;
-
-    [SerializeField]
-    private TextMeshProUGUI highScoreText = default;
 
     [SerializeField]
     private AudioSource jumpSound = default;
@@ -37,11 +36,13 @@ public class Player : MonoBehaviour
     private int platformLayer;
     private int playerLayer;
     private int score = 0;
-    private int highScore = 0;
 
     private Coroutine stageTransitionRoutine = default;
 
-    private const string highScorePlayerPref = "highscore_alpha";
+    public static int GetHighScore()
+    {
+        return PlayerPrefs.GetInt(HighScorePlayerPref, 0);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -49,17 +50,14 @@ public class Player : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
 
-        highScore = PlayerPrefs.GetInt(highScorePlayerPref, 0);
-        highScoreText.text = highScore.ToString("N0");
-
         UpdateScore(0);
     }
 
     public void RestartGame()
     {
-        if (score > highScore)
+        if (score > GetHighScore())
         {
-            PlayerPrefs.SetInt(highScorePlayerPref, score);
+            PlayerPrefs.SetInt(HighScorePlayerPref, score);
         }
         SceneManager.LoadScene(0);
     }
