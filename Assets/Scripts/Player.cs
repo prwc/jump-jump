@@ -2,7 +2,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -11,7 +10,7 @@ public class Player : MonoBehaviour
     public event Action<int> OnDead = default;
 
     [SerializeField]
-    private SpriteRenderer spriteRenderer = default;
+    private Animator playerAnimator = default;
 
     [SerializeField]
     private Rigidbody2D playerRigidbody = default;
@@ -120,14 +119,7 @@ public class Player : MonoBehaviour
 
     private void UpdateState()
     {
-        if (!isGrounded)
-        {
-            spriteRenderer.color = Color.red;
-        }
-        else
-        {
-            spriteRenderer.color = Color.white;
-        }
+        playerAnimator.SetBool("isGrounded", isGrounded);
     }
 
     private void OnCollisionEnter2D(Collision2D other)

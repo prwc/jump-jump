@@ -78,6 +78,7 @@ public class PlatformGenerator : MonoBehaviour
         }
 
         player.transform.SetParent(null);
+        player.gameObject.SetActive(false);
 
         endScoreText.text = score.ToString("N0");
         highScoreText.text = Player.GetHighScore().ToString("N0");
@@ -98,7 +99,7 @@ public class PlatformGenerator : MonoBehaviour
         player.gameObject.SetActive(true);
         floor.gameObject.SetActive(true);
 
-        player.transform.position = floor.transform.position + Vector3.up;
+        player.transform.position = floor.transform.position + (Vector3.up * 0.5f);
         player.StartGame();
 
         int highScore = Player.GetHighScore();
