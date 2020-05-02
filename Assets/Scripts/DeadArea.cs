@@ -15,7 +15,7 @@ public class DeadArea : MonoBehaviour
         if (other.gameObject.layer == playerLayer)
         {
             Player player = other.gameObject.GetComponent<Player>();
-            player.RestartGame();
+            player.OnCollideDeadArea();
         }
     }
 }

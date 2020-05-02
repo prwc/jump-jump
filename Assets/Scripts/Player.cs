@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public const string HighScorePlayerPref = "highscore_alpha";
+
+    public event Action<int> OnDead = default;
 
     [SerializeField]
     private SpriteRenderer spriteRenderer = default;
@@ -44,28 +47,28 @@ public class Player : MonoBehaviour
         return PlayerPrefs.GetInt(HighScorePlayerPref, 0);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnCollideDeadArea()
     {
-        playerLayer = LayerMask.NameToLayer("Player");
-        platformLayer = LayerMask.NameToLayer("Platform");
-
-        UpdateScore(0);
+        OnDead?.Invoke(score);
     }
 
-    public void RestartGame()
+    public void StartGame()
     {
-        if (score > GetHighScore())
-        {
-            PlayerPrefs.SetInt(HighScorePlayerPref, score);
-        }
-        SceneManager.LoadScene(0);
+        UpdateScore(0);
     }
 
     private void UpdateScore(int score)
     {
         this.score = score;
         scoreText.text = $"{score.ToString("N0")}";
+    }
+
+    private void Start()
+    {
+        playerLayer = LayerMask.NameToLayer("Player");
+        platformLayer = LayerMask.NameToLayer("Platform");
+
+        UpdateScore(0);
     }
 
     private void Update()
