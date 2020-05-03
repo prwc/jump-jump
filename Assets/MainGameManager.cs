@@ -136,7 +136,7 @@ public class MainGameManager : MonoBehaviour
     {
         while (!Advertisement.IsReady(placementID))
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
 
         if (retryScreenGroup.gameObject.activeSelf)
