@@ -274,7 +274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -500}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &214525542
@@ -467,7 +467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -57.2}
+  m_AnchoredPosition: {x: 0, y: -80}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &332470690
@@ -1398,7 +1398,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 312.9}
+  m_AnchoredPosition: {x: 0, y: 310}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &796800233
@@ -2054,7 +2054,7 @@ GameObject:
   - component: {fileID: 1312190746}
   - component: {fileID: 1312190745}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3079,13 +3079,14 @@ GameObject:
   - component: {fileID: 1980599083}
   - component: {fileID: 1980599085}
   - component: {fileID: 1980599084}
+  - component: {fileID: 1980599086}
   m_Layer: 5
   m_Name: RetryGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1980599083
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3145,6 +3146,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1980599082}
   m_CullTransparentMesh: 0
+--- !u!95 &1980599086
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980599082}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d54ad903c5ca00b428e1ff85d0aeffe2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2051706912
 GameObject:
   m_ObjectHideFlags: 0
@@ -3235,6 +3255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2073226388}
+  - component: {fileID: 2073226390}
   - component: {fileID: 2073226387}
   - component: {fileID: 2073226389}
   m_Layer: 0
@@ -3266,24 +3287,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ccf2af7e5774cf84592daa40d84c1b60, type: 3}
   - {fileID: 21300000, guid: a0719ec8dfd104845904c76b6550b63e, type: 3}
   - {fileID: 21300000, guid: e23ebd906a70ca347a1e102f96b7a2aa, type: 3}
-  backgroundSprites:
-  - {fileID: 21300000, guid: f222fb00e3182624888826a2fc58db96, type: 3}
-  - {fileID: 21300000, guid: 1fca858e6a4b42b4e89903d4daa662c7, type: 3}
   floor: {fileID: 606494970}
-  background: {fileID: 1975739788}
-  titleScreenGroup: {fileID: 881974106}
-  gameScreenGroup: {fileID: 1595302278}
-  retryScreenGroup: {fileID: 1980599082}
   trees:
   - {fileID: 1119743430}
   - {fileID: 754044928}
   - {fileID: 2051706914}
   - {fileID: 562176072}
-  player: {fileID: 1571373653}
-  startGameButton: {fileID: 72641558}
-  retryGameButton: {fileID: 1007225133}
-  endScoreText: {fileID: 642008028}
-  highScoreText: {fileID: 214525544}
 --- !u!4 &2073226388
 Transform:
   m_ObjectHideFlags: 0
@@ -3394,6 +3403,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2073226390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2073226386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189074553c2d7934abbb8527169c64bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  titleScreenGroup: {fileID: 881974106}
+  gameScreenGroup: {fileID: 1595302278}
+  retryScreenGroup: {fileID: 1980599082}
+  player: {fileID: 1571373653}
+  startGameButton: {fileID: 72641558}
+  retryGameButton: {fileID: 1007225133}
+  endScoreText: {fileID: 642008028}
+  highScoreText: {fileID: 214525544}
+  platformGenerator: {fileID: 2073226387}
 --- !u!1 &2121463180
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Advertisements;
-using UnityEngine.UI;
 
 public class PlatformGenerator : MonoBehaviour
 {
+    public SpriteRenderer Floor => floor;
+
     [SerializeField]
     private GameObject platformGroupPrefab = default;
 
@@ -19,119 +16,37 @@ public class PlatformGenerator : MonoBehaviour
     private Sprite[] treeSprites = default;
 
     [SerializeField]
-    private Sprite[] backgroundSprites = default;
-
-    [SerializeField]
     private SpriteRenderer floor = default;
-
-    [SerializeField]
-    private SpriteRenderer background = default;
-
-    [SerializeField]
-    private GameObject titleScreenGroup = default;
-
-    [SerializeField]
-    private GameObject gameScreenGroup = default;
-
-    [SerializeField]
-    private GameObject retryScreenGroup = default;
 
     [SerializeField]
     private SpriteRenderer[] trees = default;
 
-    [SerializeField]
-    private Player player = default;
-
-    [SerializeField]
-    private Button startGameButton = default;
-
-    [SerializeField]
-    private Button retryGameButton = default;
-
-    [SerializeField]
-    private TextMeshProUGUI endScoreText = default;
-
-    [SerializeField]
-    private TextMeshProUGUI highScoreText = default;
-
     private List<Platform> platforms = default;
 
     private float offsetHeight = 2f;
-
     private const int maxBoxSize = 3;
-    private Vector3 startCameraPositionCache = default;
-
-    public static string GetAdvertisementID() => "3584481";
 
     private void Start()
     {
-        Advertisement.Initialize(GetAdvertisementID());
-
-        startCameraPositionCache = Camera.main.transform.position;
-
-        titleScreenGroup.gameObject.SetActive(true);
-        gameScreenGroup.gameObject.SetActive(false);
-        retryScreenGroup.gameObject.SetActive(false);
-
-        player.gameObject.SetActive(false);
         floor.gameObject.SetActive(false);
-
-        startGameButton.onClick.AddListener(StartGame);
-        retryGameButton.onClick.AddListener(StartGame);
-
-        player.OnDead += OnPlayerDead;
-    }
-
-    private void OnPlayerDead(int score)
-    {
-        if (score > Player.GetHighScore())
-        {
-            PlayerPrefs.SetInt(Player.HighScorePlayerPref, score);
-        }
-
-        player.transform.SetParent(null);
-        player.gameObject.SetActive(false);
-
-        endScoreText.text = score.ToString("N0");
-        highScoreText.text = Player.GetHighScore().ToString("N0");
-
-        titleScreenGroup.gameObject.SetActive(false);
-        gameScreenGroup.gameObject.SetActive(false);
-        retryScreenGroup.gameObject.SetActive(true);
-
-        StartCoroutine(ShowBannerWhenReady("retry_banner"));
     }
 
     public void StartGame()
     {
-        Advertisement.Banner.Hide();
-
-        Camera.main.transform.position = startCameraPositionCache;
-
-        titleScreenGroup.gameObject.SetActive(false);
-        gameScreenGroup.gameObject.SetActive(true);
-        retryScreenGroup.gameObject.SetActive(false);
-
-        player.gameObject.SetActive(true);
         floor.gameObject.SetActive(true);
-
-        player.transform.position = floor.transform.position + (Vector3.up * 0.5f);
-        player.StartGame();
-
-        int highScore = Player.GetHighScore();
-        Sprite backgroundSprite = backgroundSprites[UnityEngine.Random.Range(0, backgroundSprites.Count())];
         int spriteRandomIndex = UnityEngine.Random.Range(0, tileSprites.Count());
+
+        InitGame();
+
         Sprite tileSprite = tileSprites[spriteRandomIndex];
         Sprite treeSprite = treeSprites[spriteRandomIndex];
-
         foreach (var tree in trees)
         {
             tree.sprite = treeSprite;
         }
-
-        InitGame();
-
         floor.sprite = tileSprite;
+
+        int highScore = Player.GetHighScore();
 
         for (int i = 0; i < 100; ++i)
         {
@@ -143,12 +58,8 @@ public class PlatformGenerator : MonoBehaviour
             platform.SetMoveSpeed(CalculateMoveSpeed(i));
             platform.SetSize(CalculateSize(i));
             platform.transform.localPosition = Vector2.right * UnityEngine.Random.Range(-2f, 2f);
+            platform.enabled = true;
         }
-    }
-
-    public void ShowPlayAgain()
-    {
-
     }
 
     private void InitGame()
@@ -163,15 +74,6 @@ public class PlatformGenerator : MonoBehaviour
                 platforms.Add(platform);
             }
         }
-    }
-
-    private IEnumerator ShowBannerWhenReady(string placementID)
-    {
-        while (!Advertisement.IsReady(placementID))
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
-        Advertisement.Banner.Show(placementID);
     }
 
     private float CalculateMoveSpeed(int index)
