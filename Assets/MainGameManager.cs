@@ -26,6 +26,9 @@ public class MainGameManager : MonoBehaviour
     private Button retryGameButton = default;
 
     [SerializeField]
+    private Button rateUsStoreButton = default;
+
+    [SerializeField]
     private TextMeshProUGUI endScoreText = default;
 
     [SerializeField]
@@ -54,6 +57,7 @@ public class MainGameManager : MonoBehaviour
 
         startGameButton.onClick.AddListener(StartGame);
         retryGameButton.onClick.AddListener(StartGame);
+        rateUsStoreButton.onClick.AddListener(OpenStorePage);
 
         player.OnDead += OnPlayerDead;
     }
@@ -86,6 +90,9 @@ public class MainGameManager : MonoBehaviour
         gameScreenGroup.gameObject.SetActive(false);
         retryScreenGroup.gameObject.SetActive(true);
 
+        bool isShowRateUsButton = (PlayerPrefs.GetInt(Player.RateUsStorePlayerPref, 0) == 0);
+        rateUsStoreButton.gameObject.SetActive(isShowRateUsButton);
+
         ShowAdsBanner();
     }
 
@@ -108,6 +115,8 @@ public class MainGameManager : MonoBehaviour
     private void OpenStorePage()
     {
         Application.OpenURL("market://details?id=" + Application.identifier);
+        PlayerPrefs.SetInt(Player.RateUsStorePlayerPref, 1);
+        rateUsStoreButton.gameObject.SetActive(false);
     }
 
     private void OnPlayerDead(int score)

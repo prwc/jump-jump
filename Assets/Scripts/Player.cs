@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public const string HighScorePlayerPref = "highscore_alpha";
+    public const string RateUsStorePlayerPref = "rate_us_store";
 
     public event Action<int> OnDead = default;
 
