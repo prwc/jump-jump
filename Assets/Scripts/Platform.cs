@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    public IReadOnlyList<Transform> CircularWaypoint => circularWaypoint;
+
     public int Score { get; private set; } = 0;
 
     [SerializeField]

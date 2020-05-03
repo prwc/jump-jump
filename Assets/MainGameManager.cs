@@ -73,6 +73,7 @@ public class MainGameManager : MonoBehaviour
         platformGenerator.StartGame();
 
         player.transform.position = platformGenerator.Floor.transform.position + (Vector3.up * 0.5f);
+        player.transform.SetParent(platformGenerator.Floor.transform);
         player.StartGame();
     }
 

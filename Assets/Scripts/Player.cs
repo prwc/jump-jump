@@ -28,6 +28,9 @@ public class Player : MonoBehaviour
     private AudioSource stageTransitionSound = default;
 
     [SerializeField]
+    private PlatformGenerator platformGenerator = default;
+
+    [SerializeField]
     private Timer timer = default;
 
     [SerializeField]
@@ -53,6 +56,10 @@ public class Player : MonoBehaviour
 
     public void StartGame()
     {
+        if (stageTransitionRoutine != default)
+        {
+            StopCoroutine(stageTransitionRoutine);
+        }
         UpdateScore(0);
         timer.ResetTime();
     }
@@ -164,11 +171,7 @@ public class Player : MonoBehaviour
         Vector3 startPosition = Camera.main.transform.position;
         float ratio = 0f;
 
-        var platforms = GameObject.FindObjectsOfType<Platform>();
-        foreach (var platform in platforms)
-        {
-            platform.enabled = false;
-        }
+        platformGenerator.StopMoving();
 
         stageTransitionSound.Play();
 
@@ -179,10 +182,7 @@ public class Player : MonoBehaviour
             yield return null;
         } while (ratio < 1f);
 
-        foreach (var platform in platforms)
-        {
-            platform.enabled = true;
-        }
+        platformGenerator.StartMoving();
 
         stageTransitionRoutine = default;
 
