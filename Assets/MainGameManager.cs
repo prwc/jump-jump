@@ -129,6 +129,10 @@ public class MainGameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
         }
-        Advertisement.Banner.Show(placementID);
+
+        if (retryScreenGroup.gameObject.activeSelf)
+        {
+            Advertisement.Banner.Show(placementID);
+        }
     }
 }
