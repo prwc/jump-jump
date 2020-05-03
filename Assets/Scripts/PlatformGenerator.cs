@@ -124,7 +124,7 @@ public class PlatformGenerator : MonoBehaviour
 
     private bool CalculateShowCloud(int index)
     {
-        return (UnityEngine.Random.Range(0, 5) == 0);
+        return (UnityEngine.Random.Range(0, 10) == 0);
     }
 
     private int CalculateSize(int index)
