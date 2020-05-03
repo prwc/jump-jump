@@ -6,7 +6,7 @@ public class PlatformGenerator : MonoBehaviour
 {
     public SpriteRenderer Floor => floor;
 
-    public const int MaxLevel = 3;
+    public const int MaxLevel = 100;
 
     [SerializeField]
     private GameObject platformGroupPrefab = default;
