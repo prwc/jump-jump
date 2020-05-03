@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
-using System;
 
 public class MainGameManager : MonoBehaviour
 {
