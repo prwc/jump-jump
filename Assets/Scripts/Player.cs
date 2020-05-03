@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public const string HighScorePlayerPref = "highscore_alpha";
+    public const string HighScorePlayerPref = "highscore_100_level";
     public const string RateUsStorePlayerPref = "rate_us_store";
+    public const string PlayCountPlayerPref = "play_count";
 
     public event Action<int> OnDead = default;
 
@@ -152,6 +153,10 @@ public class Player : MonoBehaviour
             if (platform.Score > score)
             {
                 UpdateScore(platform.Score);
+                if (platform.Score == PlatformGenerator.MaxLevel)
+                {
+                    OnDead?.Invoke(platform.Score);
+                }
             }
         }
     }

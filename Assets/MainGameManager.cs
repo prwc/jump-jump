@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
+using System;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -15,6 +17,12 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject retryScreenGroup = default;
+
+    [SerializeField]
+    private GameObject showScoreGroup = default;
+
+    [SerializeField]
+    private GameObject endGameGroup = default;
 
     [SerializeField]
     private Player player = default;
@@ -90,6 +98,17 @@ public class MainGameManager : MonoBehaviour
         gameScreenGroup.gameObject.SetActive(false);
         retryScreenGroup.gameObject.SetActive(true);
 
+        if (score >= PlatformGenerator.MaxLevel)
+        {
+            showScoreGroup.gameObject.SetActive(false);
+            endGameGroup.gameObject.SetActive(true);
+        }
+        else
+        {
+            showScoreGroup.gameObject.SetActive(true);
+            endGameGroup.gameObject.SetActive(false);
+        }
+
         bool isShowRateUsButton = (PlayerPrefs.GetInt(Player.RateUsStorePlayerPref, 0) == 0);
         rateUsStoreButton.gameObject.SetActive(isShowRateUsButton);
 
@@ -114,6 +133,11 @@ public class MainGameManager : MonoBehaviour
 
     private void OpenStorePage()
     {
+        AnalyticsEvent.Custom("clicked_rate_us_button", new Dictionary<string, object>
+        {
+            { "play_count", PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) },
+        });
+
         Application.OpenURL("market://details?id=" + Application.identifier);
         PlayerPrefs.SetInt(Player.RateUsStorePlayerPref, 1);
         rateUsStoreButton.gameObject.SetActive(false);
@@ -126,8 +150,16 @@ public class MainGameManager : MonoBehaviour
             PlayerPrefs.SetInt(Player.HighScorePlayerPref, score);
         }
 
+        PlayerPrefs.SetInt(Player.PlayCountPlayerPref, PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) + 1);
+
         player.transform.SetParent(null);
         player.gameObject.SetActive(false);
+
+        AnalyticsEvent.Custom("reached_score_level_10_sampling_" + (score / 10).ToString("00"), new Dictionary<string, object>
+        {
+            { "score", score },
+            { "play_count", PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) },
+        });
 
         ShowPlayAgain(score, Player.GetHighScore());
     }

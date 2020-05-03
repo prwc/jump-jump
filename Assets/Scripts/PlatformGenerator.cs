@@ -6,6 +6,8 @@ public class PlatformGenerator : MonoBehaviour
 {
     public SpriteRenderer Floor => floor;
 
+    public const int MaxLevel = 3;
+
     [SerializeField]
     private GameObject platformGroupPrefab = default;
 
@@ -52,22 +54,35 @@ public class PlatformGenerator : MonoBehaviour
 
         int highScore = Player.GetHighScore();
 
-        for (int i = 0; i < 100; ++i)
+        for (int i = 0; i < MaxLevel; ++i)
         {
             Platform platform = platforms.ElementAt(i);
             int score = i + 1;
             platform.SetTileSprite(tileSprite);
             platform.SetScore(score);
-            platform.SetHighScoreGroupVisible(score == highScore);
-            platform.SetMoveSpeed(CalculateMoveSpeed(i));
-            platform.SetSize(score == highScore ? 3 : CalculateSize(i));
-            platform.transform.localPosition = Vector2.right * UnityEngine.Random.Range(-2f, 2f);
-            platform.enabled = true;
 
             Cloud cloud = clouds.ElementAt(i);
             cloud.SetMoveSpeed(CalculateMoveSpeed(i));
-            cloud.gameObject.SetActive(CalculateShowCloud(i));
             cloud.enabled = true;
+
+            if (i == MaxLevel - 1)
+            {
+                platform.SetHighScoreGroupVisible(false);
+                platform.SetEndGameGroupVisible(true);
+                platform.SetSize(3);
+                cloud.gameObject.SetActive(false);
+            }
+            else
+            {
+                platform.SetHighScoreGroupVisible(score == highScore);
+                platform.SetEndGameGroupVisible(false);
+                platform.SetSize((score == highScore) ? 3 : CalculateSize(i));
+                cloud.gameObject.SetActive(CalculateShowCloud(i));
+            }
+
+            platform.SetMoveSpeed(CalculateMoveSpeed(i));
+            platform.transform.localPosition = Vector2.right * UnityEngine.Random.Range(-2f, 2f);
+            platform.enabled = true;
         }
     }
 
@@ -103,7 +118,7 @@ public class PlatformGenerator : MonoBehaviour
         {
             platforms = new List<Platform>();
             clouds = new List<Cloud>();
-            for (int i = 0; i < 100; ++i)
+            for (int i = 0; i < MaxLevel; ++i)
             {
                 GameObject go = GameObject.Instantiate(platformGroupPrefab, Vector3.up * (i + 1) * offsetHeight, Quaternion.identity, transform);
                 Platform platform = go.GetComponentInChildren<Platform>();
@@ -129,9 +144,9 @@ public class PlatformGenerator : MonoBehaviour
 
     private int CalculateSize(int index)
     {
-        if (UnityEngine.Random.Range(0, 100) < index)
+        if (UnityEngine.Random.Range(0, MaxLevel) < index)
         {
-            if (UnityEngine.Random.Range(0, 100) < index)
+            if (UnityEngine.Random.Range(0, MaxLevel) < index)
             {
                 return 1;
             }

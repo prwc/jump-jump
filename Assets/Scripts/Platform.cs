@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class Platform : MonoBehaviour
     [SerializeField]
     private GameObject highScoreGroup = default;
 
+    [SerializeField]
+    private GameObject endGameGroup = default;
+
     private float moveSpeed = 1f;
 
     private int targetIndex = 0;
@@ -39,6 +43,11 @@ public class Platform : MonoBehaviour
         highScoreGroup.gameObject.SetActive(isVisible);
     }
 
+    public void SetEndGameGroupVisible(bool isVisible)
+    {
+        endGameGroup.gameObject.SetActive(isVisible);
+    }
+
     public void SetSize(int size)
     {
         Vector2 newSize = new Vector2(size, spriteRenderer.size.y);
@@ -53,7 +62,7 @@ public class Platform : MonoBehaviour
 
     private void Start()
     {
-        targetIndex = Random.Range(0, circularWaypoint.Count);
+        targetIndex = UnityEngine.Random.Range(0, circularWaypoint.Count);
     }
 
     private void Update()
