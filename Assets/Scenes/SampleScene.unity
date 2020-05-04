@@ -1994,7 +1994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4741981305762595033, guid: 578eac69b74099e4daaff1a11382483c,
+  m_Sprite: {fileID: 1628380553287235463, guid: 578eac69b74099e4daaff1a11382483c,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -2755,7 +2755,7 @@ GameObject:
   - component: {fileID: 1709500638}
   - component: {fileID: 1709500637}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ShareButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2818,7 +2818,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1709500638}
   m_OnClick:
     m_PersistentCalls:
@@ -2835,7 +2835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6930f6d0ddbc38143a950ce44c5dc6b0, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2918,7 +2918,7 @@ MonoBehaviour:
   m_text: TOON JUMP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 76bb29de9744e6a479da8779e2ebfb79, type: 2}
-  m_sharedMaterial: {fileID: 4783399985067616867, guid: ac2168571a1e9a04a98f7c603c593308,
+  m_sharedMaterial: {fileID: 4783399985067616867, guid: 76bb29de9744e6a479da8779e2ebfb79,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3818,6 +3818,7 @@ MonoBehaviour:
   startGameButton: {fileID: 72641558}
   retryGameButton: {fileID: 1007225133}
   rateUsStoreButton: {fileID: 668607668}
+  shareScoreButton: {fileID: 1709500637}
   endScoreText: {fileID: 642008028}
   highScoreText: {fileID: 214525544}
   platformGenerator: {fileID: 2073226387}

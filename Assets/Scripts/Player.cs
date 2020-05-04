@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 
     public event Action<int> OnDead = default;
 
+    public int Score => score;
+
     [SerializeField]
     private Animator playerAnimator = default;
 
