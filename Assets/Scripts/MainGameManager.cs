@@ -246,7 +246,7 @@ public class MainGameManager : MonoBehaviour
         else
         {
             PlayGamesPlatform.Instance.Authenticate(
-                signInInteractivity: SignInInteractivity.CanPromptAlways,
+                signInInteractivity: SignInInteractivity.CanPromptOnce,
                 callback: (SignInStatus status) =>
                 {
                     UpdateHighScore();
