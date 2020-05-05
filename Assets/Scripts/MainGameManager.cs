@@ -28,9 +28,6 @@ public class MainGameManager : MonoBehaviour
     private GameObject endGameGroup = default;
 
     [SerializeField]
-    private GameObject titleButtonGroup = default;
-
-    [SerializeField]
     private Player player = default;
 
     [SerializeField]
@@ -47,6 +44,9 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField]
     private Button[] scoreBoardButtons = default;
+
+    [SerializeField]
+    private GameObject titleButtonGroup = default;
 
     [SerializeField]
     private TextMeshProUGUI endScoreText = default;
@@ -88,11 +88,17 @@ public class MainGameManager : MonoBehaviour
         player.OnDead += OnPlayerDead;
 
         titleButtonGroup.gameObject.SetActive(false);
+
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
-        PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
-        PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);
+        PlayGamesPlatform.Instance.Authenticate(
+            callback: (bool isSuccess) =>
+            {
+                titleButtonGroup.gameObject.SetActive(true);
+            },
+            silent: true
+        );
     }
 
     public void StartGame()
@@ -178,6 +184,7 @@ public class MainGameManager : MonoBehaviour
         if (score > Player.GetHighScore())
         {
             PlayerPrefs.SetInt(Player.HighScorePlayerPref, score);
+            UpdateHighScore();
         }
 
         Player.SetPlayedCount(Player.GetPlayedCount() + 1);
@@ -190,17 +197,6 @@ public class MainGameManager : MonoBehaviour
             { "score", score },
             { "play_count", Player.GetPlayedCount() },
         });
-
-        if (PlayGamesPlatform.Instance.localUser.authenticated)
-        {
-            PlayGamesPlatform.Instance.ReportScore(
-                score: score,
-                board: GPGSIds.leaderboard_100_steps_to_the_treasure,
-                (bool success) =>
-                {
-                    // TODO : updated done
-                });
-        }
 
         ShowPlayAgain(score, Player.GetHighScore());
     }
@@ -241,11 +237,6 @@ public class MainGameManager : MonoBehaviour
         });
     }
 
-    private void SignInCallback(bool isSuccess)
-    {
-        titleButtonGroup.gameObject.SetActive(true);
-    }
-
     private void OnScoreBoardButtonClicked()
     {
         if (PlayGamesPlatform.Instance.localUser.authenticated)
@@ -255,14 +246,30 @@ public class MainGameManager : MonoBehaviour
         else
         {
             PlayGamesPlatform.Instance.Authenticate(
-                callback: (bool isSuccess) =>
+                signInInteractivity: SignInInteractivity.CanPromptAlways,
+                callback: (SignInStatus status) =>
                 {
+                    UpdateHighScore();
                     if (PlayGamesPlatform.Instance.localUser.authenticated)
                     {
                         PlayGamesPlatform.Instance.ShowLeaderboardUI();
                     }
-                },
-                silent: true
+                }
+            );
+        }
+    }
+
+    private void UpdateHighScore()
+    {
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.ReportScore(
+                score: Player.GetHighScore(),
+                board: GPGSIds.leaderboard_100_steps_to_the_treasure_box,
+                (bool success) =>
+                {
+                    // TODO : updated done
+                }
             );
         }
     }

@@ -157,7 +157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &72641558
 MonoBehaviour:
@@ -1387,7 +1387,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &668607668
 MonoBehaviour:
@@ -1931,7 +1931,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &905851042
 MonoBehaviour:
@@ -2049,7 +2049,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1007225133
 MonoBehaviour:
@@ -2611,7 +2611,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1555966451
 MonoBehaviour:
@@ -2778,7 +2778,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1709500637
 MonoBehaviour:
@@ -3297,7 +3297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 203.125, y: 201.5626}
+  m_SizeDelta: {x: 182.8125, y: 181.40634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1931098205
 MonoBehaviour:
@@ -3814,7 +3814,6 @@ MonoBehaviour:
   retryScreenGroup: {fileID: 1980599082}
   showScoreGroup: {fileID: 1335336926}
   endGameGroup: {fileID: 564628182}
-  titleButtonGroup: {fileID: 1231829002}
   player: {fileID: 1571373653}
   startGameButton: {fileID: 72641558}
   retryGameButton: {fileID: 1007225133}
@@ -3823,6 +3822,7 @@ MonoBehaviour:
   scoreBoardButtons:
   - {fileID: 1555966451}
   - {fileID: 1931098205}
+  titleButtonGroup: {fileID: 1231829002}
   endScoreText: {fileID: 642008028}
   highScoreText: {fileID: 214525544}
   platformGenerator: {fileID: 2073226387}

@@ -24,7 +24,7 @@
 
 public static class GPGSIds
 {
-        public const string leaderboard_100_steps_to_the_treasure = "CgkIjaStt4AREAIQAQ"; // <GPGSID>
+        public const string leaderboard_100_steps_to_the_treasure_box = "CgkIjaStt4AREAIQAA"; // <GPGSID>
 
 }
 
