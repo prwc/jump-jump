@@ -1407,7 +1407,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2588,7 +2588,7 @@ GameObject:
   - component: {fileID: 1555966452}
   - component: {fileID: 1555966451}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ScoreBoardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2631,7 +2631,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2651,7 +2651,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1555966452}
   m_OnClick:
     m_PersistentCalls:
@@ -2668,7 +2668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6930f6d0ddbc38143a950ce44c5dc6b0, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -3274,7 +3274,7 @@ GameObject:
   - component: {fileID: 1931098206}
   - component: {fileID: 1931098205}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ScoreBoardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3317,7 +3317,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 0
+  m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -3337,7 +3337,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1931098206}
   m_OnClick:
     m_PersistentCalls:
@@ -3354,13 +3354,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6930f6d0ddbc38143a950ce44c5dc6b0, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8869908062226082480, guid: 578eac69b74099e4daaff1a11382483c,
+  m_Sprite: {fileID: 9115601330262710157, guid: 578eac69b74099e4daaff1a11382483c,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -3814,11 +3814,15 @@ MonoBehaviour:
   retryScreenGroup: {fileID: 1980599082}
   showScoreGroup: {fileID: 1335336926}
   endGameGroup: {fileID: 564628182}
+  titleButtonGroup: {fileID: 1231829002}
   player: {fileID: 1571373653}
   startGameButton: {fileID: 72641558}
   retryGameButton: {fileID: 1007225133}
   rateUsStoreButton: {fileID: 668607668}
   shareScoreButton: {fileID: 1709500637}
+  scoreBoardButtons:
+  - {fileID: 1555966451}
+  - {fileID: 1931098205}
   endScoreText: {fileID: 642008028}
   highScoreText: {fileID: 214525544}
   platformGenerator: {fileID: 2073226387}

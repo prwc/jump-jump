@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     public const string HighScorePlayerPref = "highscore_100_level";
     public const string RateUsStorePlayerPref = "rate_us_store";
-    public const string PlayCountPlayerPref = "play_count";
+    public const string PlayedCountPlayerPref = "play_count";
 
     public event Action<int> OnDead = default;
 
@@ -51,6 +51,16 @@ public class Player : MonoBehaviour
     public static int GetHighScore()
     {
         return PlayerPrefs.GetInt(HighScorePlayerPref, 0);
+    }
+
+    public static int GetPlayedCount()
+    {
+        return PlayerPrefs.GetInt(Player.PlayedCountPlayerPref, 0);
+    }
+
+    public static void SetPlayedCount(int count)
+    {
+        PlayerPrefs.SetInt(Player.PlayedCountPlayerPref, count);
     }
 
     public void OnCollideDeadArea()

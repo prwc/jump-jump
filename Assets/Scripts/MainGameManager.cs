@@ -6,6 +6,9 @@ using UnityEngine.Advertisements;
 using UnityEngine.UI;
 using UnityEngine.Analytics;
 using System.IO;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using System;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -25,6 +28,9 @@ public class MainGameManager : MonoBehaviour
     private GameObject endGameGroup = default;
 
     [SerializeField]
+    private GameObject titleButtonGroup = default;
+
+    [SerializeField]
     private Player player = default;
 
     [SerializeField]
@@ -38,6 +44,9 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField]
     private Button shareScoreButton = default;
+
+    [SerializeField]
+    private Button[] scoreBoardButtons = default;
 
     [SerializeField]
     private TextMeshProUGUI endScoreText = default;
@@ -71,7 +80,19 @@ public class MainGameManager : MonoBehaviour
         rateUsStoreButton.onClick.AddListener(OpenStorePage);
         shareScoreButton.onClick.AddListener(OnShareScoreButtonClicked);
 
+        foreach (var scoreBoardButton in scoreBoardButtons)
+        {
+            scoreBoardButton.onClick.AddListener(OnScoreBoardButtonClicked);
+        }
+
         player.OnDead += OnPlayerDead;
+
+        titleButtonGroup.gameObject.SetActive(false);
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
+        PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.InitializeInstance(config);
+        PlayGamesPlatform.Activate();
+        PlayGamesPlatform.Instance.Authenticate(SignInCallback, true);
     }
 
     public void StartGame()
@@ -113,7 +134,7 @@ public class MainGameManager : MonoBehaviour
             endGameGroup.gameObject.SetActive(false);
         }
 
-        bool isShowRateUsButton = (PlayerPrefs.GetInt(Player.RateUsStorePlayerPref, 0) == 0);
+        bool isShowRateUsButton = (PlayerPrefs.GetInt(Player.RateUsStorePlayerPref, 0) == 0) && (Player.GetPlayedCount() > 5);
         rateUsStoreButton.gameObject.SetActive(isShowRateUsButton);
 
         ShowAdsBanner();
@@ -144,7 +165,7 @@ public class MainGameManager : MonoBehaviour
     {
         AnalyticsEvent.Custom("clicked_rate_us_button", new Dictionary<string, object>
         {
-            { "play_count", PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) },
+            { "play_count", Player.GetPlayedCount() },
         });
 
         Application.OpenURL("market://details?id=" + Application.identifier);
@@ -159,7 +180,7 @@ public class MainGameManager : MonoBehaviour
             PlayerPrefs.SetInt(Player.HighScorePlayerPref, score);
         }
 
-        PlayerPrefs.SetInt(Player.PlayCountPlayerPref, PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) + 1);
+        Player.SetPlayedCount(Player.GetPlayedCount() + 1);
 
         player.transform.SetParent(null);
         player.gameObject.SetActive(false);
@@ -167,8 +188,19 @@ public class MainGameManager : MonoBehaviour
         AnalyticsEvent.Custom("reached_score_level_10_sampling_" + (score / 10).ToString("00"), new Dictionary<string, object>
         {
             { "score", score },
-            { "play_count", PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) },
+            { "play_count", Player.GetPlayedCount() },
         });
+
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.ReportScore(
+                score: score,
+                board: GPGSIds.leaderboard_100_steps_to_the_treasure,
+                (bool success) =>
+                {
+                    // TODO : updated done
+                });
+        }
 
         ShowPlayAgain(score, Player.GetHighScore());
     }
@@ -205,7 +237,33 @@ public class MainGameManager : MonoBehaviour
         AnalyticsEvent.Custom("share_button_clicked", new Dictionary<string, object>
         {
             { "score", score },
-            { "play_count", PlayerPrefs.GetInt(Player.PlayCountPlayerPref, 0) },
+            { "play_count", Player.GetPlayedCount() },
         });
+    }
+
+    private void SignInCallback(bool isSuccess)
+    {
+        titleButtonGroup.gameObject.SetActive(true);
+    }
+
+    private void OnScoreBoardButtonClicked()
+    {
+        if (PlayGamesPlatform.Instance.localUser.authenticated)
+        {
+            PlayGamesPlatform.Instance.ShowLeaderboardUI();
+        }
+        else
+        {
+            PlayGamesPlatform.Instance.Authenticate(
+                callback: (bool isSuccess) =>
+                {
+                    if (PlayGamesPlatform.Instance.localUser.authenticated)
+                    {
+                        PlayGamesPlatform.Instance.ShowLeaderboardUI();
+                    }
+                },
+                silent: true
+            );
+        }
     }
 }
