@@ -55,6 +55,9 @@ public class MainGameManager : MonoBehaviour
     private TextMeshProUGUI highScoreText = default;
 
     [SerializeField]
+    private TextMeshProUGUI versionText = default;
+
+    [SerializeField]
     private PlatformGenerator platformGenerator = default;
 
     private Vector3 startCameraPositionCache = default;
@@ -68,6 +71,8 @@ public class MainGameManager : MonoBehaviour
         Advertisement.Banner.SetPosition(BannerPosition.BOTTOM_CENTER);
 
         startCameraPositionCache = Camera.main.transform.position;
+
+        versionText.text = $"v{Application.version}";
 
         titleScreenGroup.gameObject.SetActive(true);
         gameScreenGroup.gameObject.SetActive(false);
